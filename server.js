@@ -1,16 +1,12 @@
-// server.js
 import express from "express";
 import bodyParser from "body-parser";
 import path from "path";
 import { fileURLToPath } from "url";
-import dotenv from "dotenv";
 
-// 🔹 Carrega variáveis de ambiente do .env
-dotenv.config();
-
+// 🔹 Inicializa o app
 const app = express();
 
-// 🔹 Porta dinâmica (Render fornece via variável de ambiente)
+// 🔹 Porta dinâmica para Render ou 3000 local
 const port = process.env.PORT || 3000;
 
 // 🔹 Ajuste para ES Modules
