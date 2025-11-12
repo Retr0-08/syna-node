@@ -24,28 +24,29 @@ app.get("/", (req, res) => res.sendFile(path.join(__dirname, "public", "index.ht
 app.get("/register", (req, res) => res.sendFile(path.join(__dirname, "public", "register.html")));
 app.get("/chat", (req, res) => res.sendFile(path.join(__dirname, "public", "chat.html")));
 
-// 🔹 IA gratuita (modelo de exemplo via API pública)
+// 🔹 Rota de IA usando DuckDuckGo Llama3 (gratuita e sem chave)
 app.post("/api/send_message", async (req, res) => {
   const { message } = req.body;
 
   try {
-    const response = await fetch("https://api.monkedev.com/fun/chat", {
+    const response = await fetch("https://duckduckgo.com/duckchat/v1/chat", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "User-Agent": "Mozilla/5.0",
+      },
       body: JSON.stringify({
-        msg: message,
-        uid: "syna-user"
-      })
+        model: "gpt-4o-mini", // modelo leve e rápido
+        messages: [{ role: "user", content: message }],
+      }),
     });
 
-    const data = await response.json();
+    if (!response.ok) throw new Error(`Erro da API: ${response.status}`);
 
-    // A API retorna { response: "..." }
-    if (data?.response) {
-      res.json({ syna: data.response });
-    } else {
-      res.json({ syna: "⚠️ Não consegui entender sua mensagem, tente de novo." });
-    }
+    const data = await response.json();
+    const reply = data.message || "⚠️ A IA não respondeu.";
+
+    res.json({ syna: reply });
 
   } catch (error) {
     console.error("❌ Erro ao conectar com a IA:", error);
