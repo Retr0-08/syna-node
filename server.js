@@ -33,7 +33,7 @@ app.post("/api/send_message", async (req, res) => {
   const { message } = req.body;
 
   try {
-    const response = await fetch("https://api-inference.huggingface.co/models/gpt2", {
+    const response = await fetch("https://router.huggingface.co/hf-inference/models/gpt2", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
@@ -59,3 +59,4 @@ app.post("/api/send_message", async (req, res) => {
 
 // 🔹 Inicia o servidor
 app.listen(port, () => console.log(`🚀 Servidor rodando em http://localhost:${port}`));
+
