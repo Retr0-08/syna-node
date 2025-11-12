@@ -7,7 +7,7 @@ import { fileURLToPath } from "url";
 const app = express();
 
 // 🔹 Porta dinâmica para Render ou 3000 local
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 10000;
 
 // 🔹 Ajuste para ES Modules
 const __filename = fileURLToPath(import.meta.url);
