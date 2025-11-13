@@ -21,9 +21,10 @@ body {
   align-items: center;
   justify-content: center;
   color: var(--text);
-  overflow: visible; /* 🔧 antes era hidden — isso escondia o input */
+  overflow: hidden;
 }
 
+/* 💬 Container do chat */
 .chat-container {
   width: 95%;
   max-width: 500px;
@@ -35,8 +36,8 @@ body {
   display: flex;
   flex-direction: column;
   height: 85vh;
+  overflow: hidden;
   animation: glowPulse 3s ease-in-out infinite alternate;
-  overflow: visible; /* 🔧 permite o input aparecer fora do container */
 }
 
 @keyframes glowPulse {
@@ -48,6 +49,7 @@ body {
   }
 }
 
+/* Cabeçalho */
 header {
   display: flex;
   justify-content: space-between;
@@ -82,6 +84,7 @@ header {
   box-shadow: 0 0 15px var(--neon-pink);
 }
 
+/* Mensagens */
 .chat-box {
   flex: 1;
   padding: 1rem;
@@ -90,7 +93,7 @@ header {
   flex-direction: column;
   gap: 0.8rem;
   scroll-behavior: smooth;
-  padding-bottom: 80px; /* 🔧 deixa espaço pra barra de digitação */
+  padding-bottom: 80px; /* espaço pra barra de digitação */
 }
 
 .message {
@@ -121,18 +124,19 @@ header {
   align-self: flex-end;
 }
 
-/* === 🔧 Campo de digitação fixo e compatível com celulares === */
+/* 🖊️ Campo de digitação fixo e adaptável */
 .input-area {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  display: flex;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 0.8rem;
-  background: rgba(20, 0, 20, 0.85);
+  background: rgba(9, 4, 15, 0.95);
   backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
   gap: 0.5rem;
+  padding: 0.8rem;
   z-index: 1000;
 }
 
@@ -168,34 +172,60 @@ header {
   box-shadow: 0 0 20px var(--neon-pink);
 }
 
-/* 🔹 Responsividade */
-@media (max-width: 768px) {
+/* 🌐 Responsividade total */
+@media (max-width: 1024px) {
   .chat-container {
-    height: 100%;
-    width: 100%;
-    border-radius: 0;
-    box-shadow: none;
+    height: 90vh;
+    width: 95%;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    align-items: flex-start;
+    padding-top: 1rem;
   }
 
-  .logo {
-    font-size: 1.5rem;
+  .chat-container {
+    height: 95vh;
+    width: 95%;
+    border-radius: 15px;
   }
 
-  .message {
-    font-size: 0.9rem;
-    padding: 0.7rem 0.9rem;
-  }
-
-  #send-btn {
-    padding: 0 0.8rem;
+  .chat-box {
+    padding-bottom: 100px;
   }
 
   .input-area {
     padding: 0.6rem;
   }
+
+  .input-area input {
+    font-size: 0.9rem;
+  }
+
+  #send-btn {
+    padding: 0 0.8rem;
+  }
 }
 
 @media (max-width: 480px) {
+  body {
+    padding: 0;
+  }
+
+  .chat-container {
+    height: 100vh;
+    width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+  }
+
+  header {
+    padding: 0.8rem;
+  }
+
   .logo {
     font-size: 1.3rem;
   }
@@ -205,9 +235,13 @@ header {
     padding: 0.3rem 0.6rem;
   }
 
+  .input-area {
+    padding: 0.5rem;
+  }
+
   .input-area input {
-    font-size: 0.9rem;
     padding: 0.6rem;
+    font-size: 0.9rem;
   }
 
   #send-btn {
@@ -216,7 +250,7 @@ header {
   }
 }
 
-/* 📱 Suporte dinâmico pra Android (Redmi, Samsung etc.) */
+/* 🔧 Compatibilidade Android/iOS (teclado virtual) */
 @supports (height: 100dvh) {
   .chat-container {
     height: 100dvh;
