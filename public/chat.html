@@ -36,6 +36,15 @@
     sessionStorage.removeItem('logged_in');
     window.location.href = '/';
   });
+const inputArea = document.querySelector('.input-area');
+
+if (window.visualViewport) {
+  const viewport = window.visualViewport;
+  viewport.addEventListener('resize', () => {
+    const offset = window.innerHeight - viewport.height;
+    inputArea.style.bottom = offset > 0 ? `${offset}px` : '0';
+  });
+}
 </script>
 
 </body>
