@@ -14,14 +14,21 @@
   font-family: 'Poppins', sans-serif;
 }
 
-body {
-  height: 100vh;
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
   background: radial-gradient(circle at top, var(--wine), var(--bg-dark) 80%);
+  color: var(--text);
+}
+
+/* 🔹 Centralização principal */
+body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text);
-  overflow: hidden;
+  min-height: 100dvh; /* melhor suporte para celular e tablet */
+  padding: 1rem;
 }
 
 .container {
@@ -41,34 +48,28 @@ body {
   backdrop-filter: blur(10px);
   animation: glowPulse 3s ease-in-out infinite alternate;
   transition: 0.3s;
+  width: 100%;
+  max-width: 400px;
 }
 
 @keyframes glowPulse {
-  from {
-    box-shadow: 0 0 15px rgba(255, 0, 140, 0.2);
-  }
-  to {
-    box-shadow: 0 0 30px rgba(255, 0, 140, 0.6);
-  }
+  from { box-shadow: 0 0 15px rgba(255, 0, 140, 0.2); }
+  to { box-shadow: 0 0 30px rgba(255, 0, 140, 0.6); }
 }
 
-
-
+/* Logo animada */
 .logo-img {
   width: 120px;
   filter: drop-shadow(0 0 10px #ff007f);
   animation: pulse 3s infinite alternate;
+  display: block;
+  margin: 0 auto 1.5rem auto;
 }
 
 @keyframes pulse {
-  from {
-    filter: drop-shadow(0 0 8px #ff007f);
-  }
-  to {
-    filter: drop-shadow(0 0 20px #ff4da6);
-  }
+  from { filter: drop-shadow(0 0 8px #ff007f); }
+  to { filter: drop-shadow(0 0 20px #ff4da6); }
 }
-
 
 .subtitle {
   text-align: center;
@@ -91,6 +92,7 @@ input {
   background: rgba(255, 255, 255, 0.1);
   color: var(--text);
   transition: all 0.3s ease;
+  font-size: 1rem;
 }
 
 input:focus {
@@ -107,6 +109,7 @@ button {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  font-size: 1rem;
 }
 
 button:hover {
@@ -128,4 +131,53 @@ button:hover {
 
 .signup a:hover {
   text-shadow: 0 0 10px var(--neon-pink);
+}
+
+/* 🔹 Responsividade */
+@media (max-width: 768px) {
+  .login-box {
+    padding: 1.8rem 2rem;
+    width: 90%;
+  }
+
+  .logo-img {
+    width: 100px;
+  }
+
+  input, button {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 1rem;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .login-box {
+    width: 100%;
+    padding: 1.5rem;
+    border-radius: 15px;
+    max-width: 360px;
+  }
+
+  .logo-img {
+    width: 90px;
+    margin-bottom: 1rem;
+  }
+
+  input, button {
+    padding: 0.7rem;
+    font-size: 0.9rem;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+  }
+
+  .signup {
+    font-size: 0.85rem;
+  }
 }
