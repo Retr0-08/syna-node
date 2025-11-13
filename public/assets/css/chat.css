@@ -21,7 +21,7 @@ body {
   align-items: center;
   justify-content: center;
   color: var(--text);
-  overflow: hidden;
+  overflow: visible; /* 🔧 antes era hidden — isso escondia o input */
 }
 
 .chat-container {
@@ -35,8 +35,8 @@ body {
   display: flex;
   flex-direction: column;
   height: 85vh;
-  overflow: hidden;
   animation: glowPulse 3s ease-in-out infinite alternate;
+  overflow: visible; /* 🔧 permite o input aparecer fora do container */
 }
 
 @keyframes glowPulse {
@@ -90,6 +90,7 @@ header {
   flex-direction: column;
   gap: 0.8rem;
   scroll-behavior: smooth;
+  padding-bottom: 80px; /* 🔧 deixa espaço pra barra de digitação */
 }
 
 .message {
@@ -120,12 +121,19 @@ header {
   align-self: flex-end;
 }
 
+/* === 🔧 Campo de digitação fixo e compatível com celulares === */
 .input-area {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
   display: flex;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding: 0.8rem;
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(20, 0, 20, 0.85);
+  backdrop-filter: blur(10px);
   gap: 0.5rem;
+  z-index: 1000;
 }
 
 .input-area input {
@@ -163,8 +171,10 @@ header {
 /* 🔹 Responsividade */
 @media (max-width: 768px) {
   .chat-container {
-    height: 90vh;
-    width: 90%;
+    height: 100%;
+    width: 100%;
+    border-radius: 0;
+    box-shadow: none;
   }
 
   .logo {
@@ -179,25 +189,13 @@ header {
   #send-btn {
     padding: 0 0.8rem;
   }
+
+  .input-area {
+    padding: 0.6rem;
+  }
 }
 
 @media (max-width: 480px) {
-  body {
-    padding: 0;
-  }
-
-  .chat-container {
-    height: 100vh;
-    width: 100%;
-    border-radius: 0;
-    box-shadow: none;
-    border: none;
-  }
-
-  header {
-    padding: 0.8rem;
-  }
-
   .logo {
     font-size: 1.3rem;
   }
@@ -207,17 +205,20 @@ header {
     padding: 0.3rem 0.6rem;
   }
 
-  .input-area {
-    padding: 0.6rem;
-  }
-
   .input-area input {
-    padding: 0.6rem;
     font-size: 0.9rem;
+    padding: 0.6rem;
   }
 
   #send-btn {
     padding: 0 0.7rem;
     font-size: 0.9rem;
+  }
+}
+
+/* 📱 Suporte dinâmico pra Android (Redmi, Samsung etc.) */
+@supports (height: 100dvh) {
+  .chat-container {
+    height: 100dvh;
   }
 }
